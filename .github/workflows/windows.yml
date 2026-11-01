@@ -74,7 +74,7 @@ jobs:
       - name: Build Frontend for ${{ matrix.arch }}
         shell: pwsh
         run: |
-          npm run make -- --win nsis zip --${{ matrix.electron_arch }}
+          npm run make -- --win nsis zip --${{ matrix.electron_arch }} --publish never
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
