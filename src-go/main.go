@@ -61,13 +61,11 @@ func main() {
 
 	termSign := make(chan os.Signal, 1)
 	signal.Notify(termSign, syscall.SIGINT, syscall.SIGTERM)
-	select {
-	case <-termSign:
-		log.Warnln("received termination signal")
-		pandora.Release()
-		utils.UnlockSingleton()
-		executor.Shutdown()
-		sys.DisableProxy()
-	}
+	<-termSign
+	log.Warnln("received termination signal")
+	pandora.Release()
+	utils.UnlockSingleton()
+	executor.Shutdown()
+	sys.DisableProxy()
 
 }
