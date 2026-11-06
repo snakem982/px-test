@@ -66,10 +66,10 @@ jobs:
       - name: Sync VERSION to package.json
         run: node build/sync-version.js
 
-      - name: Install RPM build tools
+      - name: Install Linux package build tools
         run: |
           sudo apt-get update
-          sudo apt-get install --yes rpm
+          sudo apt-get install --yes rpm libarchive-tools
 
       - name: Build Frontend for ${{ matrix.arch }}
         shell: pwsh
