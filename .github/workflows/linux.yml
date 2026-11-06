@@ -74,12 +74,12 @@ jobs:
       - name: Build Frontend for ${{ matrix.arch }}
         shell: pwsh
         run: |
-          npm run make -- --linux deb rpm --${{ matrix.electron_arch }} --publish never
+          npm run make -- --linux deb rpm pacman --${{ matrix.electron_arch }} --publish never
 
       - name: Normalize Linux artifact names
         shell: pwsh
         run: |
-          foreach ($extension in @("deb", "rpm")) {
+          foreach ($extension in @("deb", "rpm", "pacman")) {
             $artifact = Get-ChildItem -Path "out" -Filter "*.$extension" -File
             if ($artifact.Count -ne 1) {
               throw "Expected exactly one .$extension artifact in out, found $($artifact.Count)"
@@ -97,5 +97,6 @@ jobs:
           files: |
             out/Pandora-Box-${{ env.VERSION }}-linux-${{ matrix.arch }}.deb
             out/Pandora-Box-${{ env.VERSION }}-linux-${{ matrix.arch }}.rpm
+            out/Pandora-Box-${{ env.VERSION }}-linux-${{ matrix.arch }}.pacman
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
